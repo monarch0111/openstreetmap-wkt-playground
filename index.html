@@ -101,6 +101,7 @@
       if (window.location && window.location.hash) {
         loadWKTfromURIFragment(window.location.hash);
       }
+      updateTitle();
       plotWKT();
       selectGeom('Point');
     }
@@ -169,6 +170,17 @@
       map.addLayer(vector);
       document.getElementById("wktStringTextArea").value = "";
       restoreDefaultColors();
+    }
+
+    function updateTitle() {
+      queryParams = window.location.search.slice(1);
+      params = queryParams.split('&').map(x => x.split("="));
+      for (let i in params) {
+        param = params[i];
+        if(param[0] == "req_id"){
+          window.document.title = param[1];
+        }
+      }
     }
 
     function loadWKTfromURIFragment(fragment) {
